@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "959398933295",
+    "project_id": "riteway-bac3c",
+    "storage_bucket": "riteway-bac3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959398933295:android:ba3a011a873331f1bfa7da",
+        "android_client_info": {
+          "package_name": "com.example.rite_wayy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959398933295-ae2qh613gr68fcglhcdrvo2ktvbcbli8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSbtrx5nt4Cjpqbfo2MDQgwMxD5veZj8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959398933295-ae2qh613gr68fcglhcdrvo2ktvbcbli8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
