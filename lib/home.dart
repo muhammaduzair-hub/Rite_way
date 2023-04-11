@@ -88,14 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => login(
+                      builder: (context) => Login(
                             title: '',
                           )),
                 );
               },
               child: Text(
                 "Already Registered? Log in here",
-                style: TextStyle(fontSize: screenHeight * 0.01),
+                // style: TextStyle(fontSize: screenHeight * 0.01),
               ),
             ),
           ],

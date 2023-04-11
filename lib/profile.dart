@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:rite_wayy/login.dart';
 
 class profile extends StatelessWidget {
   @override
@@ -58,9 +59,9 @@ class profile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           //crossAxisAlignment: CrossAxisAlignment.start,
-                          'ABCD EFGH',
+                          Login.user.name ?? "",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

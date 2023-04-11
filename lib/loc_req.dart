@@ -1,8 +1,32 @@
 // ignore_for_file: sort_child_properties_last
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class loc_req extends StatelessWidget {
+import 'models/route_point.dart';
+
+class loc_req extends StatefulWidget {
+  List<RoutePoint> points = [];
+
+  @override
+  State<loc_req> createState() => _loc_reqState();
+}
+
+class _loc_reqState extends State<loc_req> {
+  late Stream<QuerySnapshot> _collectionStream;
+  Future getRoutes() async {
+    _collectionStream =
+        await FirebaseFirestore.instance.collection("routePoints").snapshots();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRoutes();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +89,10 @@ class loc_req extends StatelessWidget {
                       const SizedBox(height: 10),
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                          hintText: 'Select Pick Up Location',
+                          enabled: false,
+                          hintText: 'Cust',
+                          hintStyle: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                           focusColor: Colors.yellow, // update this line
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -75,51 +102,52 @@ class loc_req extends StatelessWidget {
                         ),
                         // ignore: prefer_const_literals_to_create_immutables
                         items: [
-                          const DropdownMenuItem(
-                            child: Text('Location 1'),
-                            value: 'location_1',
-                          ),
-                          const DropdownMenuItem(
-                            child: Text('Location 2'),
-                            value: 'location_2',
-                          ),
-                          const DropdownMenuItem(
-                            child: Text('Location 3'),
-                            value: 'location_3',
-                          ),
+                          // const DropdownMenuItem(
+                          //   child: Text('Cust'),
+                          //   value: 'Cust',
+                          // ),
                         ],
                         onChanged: (value) {
                           // Handle value selection
                         },
+                        value: "Cust",
                       ),
                       const SizedBox(height: 10),
-                      DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          hintText: 'Select Drop Off Location',
-                          focusColor: Colors.yellow, // update this line
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                const BorderSide(style: BorderStyle.solid),
-                          ),
-                        ),
-                        // ignore: prefer_const_literals_to_create_immutables
-                        items: [
-                          const DropdownMenuItem(
-                            child: Text('Location 1'),
-                            value: 'location_1',
-                          ),
-                          const DropdownMenuItem(
-                            child: Text('Location 2'),
-                            value: 'location_2',
-                          ),
-                          const DropdownMenuItem(
-                            child: Text('Location 3'),
-                            value: 'location_3',
-                          ),
-                        ],
-                        onChanged: (value) {
-                          // Handle value selection
+                      StreamBuilder<QuerySnapshot>(
+                        stream: _collectionStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError ||
+                              snapshot.connectionState ==
+                                  ConnectionState.waiting) return Text("");
+                          final List<QueryDocumentSnapshot<Object?>> documents =
+                              snapshot.data!.docs;
+                          // widget.points = documents
+                          //     .map((e) => RoutePoint.fromJson(
+                          //         e.data as Map<String, dynamic>))
+                          //     .toList();
+                          return DropdownButtonFormField<Object>(
+                            decoration: InputDecoration(
+                              hintText: 'Select Drop Off Location',
+                              hintStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              focusColor: Colors.yellow,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    const BorderSide(style: BorderStyle.solid),
+                              ),
+                            ),
+                            // ignore: prefer_const_literals_to_create_immutables
+                            items: documents.map((e) {
+                              return DropdownMenuItem(
+                                child: Text(e["name"]),
+                                value: e["name"],
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              // Handle value selection
+                            },
+                          );
                         },
                       ),
                     ],
@@ -133,10 +161,7 @@ class loc_req extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: ElevatedButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => location()),
-                        // );
+                        Navigator.pop(context);
                       },
                       // ignore: sort_child_properties_last
                       child: const Text(
